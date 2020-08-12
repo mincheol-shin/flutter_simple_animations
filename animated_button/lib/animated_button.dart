@@ -56,7 +56,6 @@ class _AnimatedButtonState extends State<AnimatedButton>
   Animation animation;
   ButtonState buttonState = ButtonState.BUTTON_BEGINNING;
   bool activationStatus = false;
-  Animation<double> _scaleFinalTextAnimation;
 
   void updateButtonState() {
     buttonState == ButtonState.BUTTON_BEGINNING
@@ -73,14 +72,15 @@ class _AnimatedButtonState extends State<AnimatedButton>
         parent: controller, curve: widget.buttonDecoration.curves);
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        setState(() {
-          updateButtonState();
+        Future.delayed(Duration(milliseconds: 500), () {
+          setState(() {
+            updateButtonState();
+          });
         });
+
         controller.reverse();
       }
     });
-    _scaleFinalTextAnimation =
-        Tween<double>(begin: 1.0, end: 0.0).animate(controller);
   }
 
   @override
@@ -158,8 +158,11 @@ class _AnimatedButtonState extends State<AnimatedButton>
     return AnimatedContainer(
       duration: widget.buttonDecoration.duration,
       height: widget.containerHeight,
-      width: 80.0,
-      color: backgroundColor,
+      width: 100.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        color: backgroundColor,
+      ),
       child: Container(alignment: Alignment.center, child: icon),
     );
   }
