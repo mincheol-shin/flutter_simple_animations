@@ -16,7 +16,10 @@ class AnimatedButtonExample extends StatelessWidget {
         size: 24.0,
       )),
       home: Scaffold(
-        body: Container(
+        appBar: AppBar(
+          title: Text("AnimatedButtonExample"),
+        ),
+        body: Align(
           alignment: Alignment.center,
           child: AnimatedButton(
             containerHeight: 100,
