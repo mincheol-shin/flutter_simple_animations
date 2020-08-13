@@ -8,7 +8,13 @@ This class enables developers to button animations with simple widgets.
 
 ## :wrench: Usage
 
-### Basic Widget 
+Need to include the import the package to the dart file where it will be used, refer the below command
+```dart
+import 'package:yourPackage/animated_button.dart';
+```
+
+###
+Basic Widget 
 ```dart
   AnimatedButton(
                   containerHeight: 50,
