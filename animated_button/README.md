@@ -13,8 +13,7 @@ Need to include the import the package to the dart file where it will be used, r
 import 'package:yourPackage/animated_button.dart';
 ```
 
-###
-Basic Widget 
+### Basic Widget 
 ```dart
   AnimatedButton(
                   containerHeight: 50,
