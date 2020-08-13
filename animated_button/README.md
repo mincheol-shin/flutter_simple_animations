@@ -9,7 +9,7 @@ This class enables developers to button animations with simple widgets.
 ## :wrench: Usage
 
 ### Basic Widget 
-```
+```dart
   AnimatedButton(
                   containerHeight: 50,
                   containerWidth: 300,
@@ -28,7 +28,7 @@ This class enables developers to button animations with simple widgets.
 
 
 ### Complete example
-```
+```dart
   List<Color> exampleColorCode = [
     Colors.green[200],
     Colors.deepPurpleAccent,
