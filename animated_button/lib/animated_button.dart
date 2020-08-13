@@ -52,10 +52,15 @@ class AnimatedButton extends StatefulWidget {
 
 class _AnimatedButtonState extends State<AnimatedButton>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
+  AnimationController _controller;
   Animation animation;
   ButtonState buttonState = ButtonState.BUTTON_BEGINNING;
   bool activationStatus = false;
+  ButtonDecoration buttonDecoration;
+  Widget beginningWidget;
+  Widget completionWidget;
+  double containerHeight;
+  double containerWidth;
 
   void updateButtonState() {
     buttonState == ButtonState.BUTTON_BEGINNING
@@ -66,10 +71,17 @@ class _AnimatedButtonState extends State<AnimatedButton>
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
+
+    buttonDecoration = widget.buttonDecoration;
+    beginningWidget = widget.beginningWidget;
+    completionWidget = widget.completionWidget;
+    containerHeight = widget.containerHeight;
+    containerWidth = widget.containerWidth;
+
+    _controller = AnimationController(
         duration: widget.buttonDecoration.duration, vsync: this);
     animation = CurvedAnimation(
-        parent: controller, curve: widget.buttonDecoration.curves);
+        parent: _controller, curve: widget.buttonDecoration.curves);
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(Duration(milliseconds: 500), () {
@@ -78,14 +90,14 @@ class _AnimatedButtonState extends State<AnimatedButton>
           });
         });
 
-        controller.reverse();
+        _controller.reverse();
       }
     });
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -94,48 +106,48 @@ class _AnimatedButtonState extends State<AnimatedButton>
     if (buttonState.value) {
       return activationStatus
           ? AnimatedContainer(
-              duration: widget.buttonDecoration.duration,
-              height: widget.containerHeight,
-              width: widget.containerWidth,
+              duration: buttonDecoration.duration,
+              height: containerHeight,
+              width: containerWidth,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                color: widget.buttonDecoration.completionColor,
+                color: buttonDecoration.completionColor,
               ),
               child: InkWell(
 
                   /// Error prevention
                   onDoubleTap: () {},
                   onTap: () {
-                    controller.forward();
+                    _controller.forward();
 
                     setState(() {
                       updateButtonState();
                       activationStatus = !activationStatus;
                     });
                   },
-                  child: widget.completionWidget),
+                  child: completionWidget),
             )
           : AnimatedContainer(
-              duration: widget.buttonDecoration.duration,
-              height: widget.containerHeight,
-              width: widget.containerWidth,
+              duration: buttonDecoration.duration,
+              height: containerHeight,
+              width: containerWidth,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                color: widget.buttonDecoration.beginningColor,
+                color: buttonDecoration.beginningColor,
               ),
               child: InkWell(
 
                   /// Error prevention
                   onDoubleTap: () {},
                   onTap: () {
-                    controller.forward();
+                    _controller.forward();
 
                     setState(() {
                       updateButtonState();
                       activationStatus = !activationStatus;
                     });
                   },
-                  child: widget.beginningWidget),
+                  child: beginningWidget),
             );
     } else {
       return activationStatus
@@ -156,8 +168,8 @@ class _AnimatedButtonState extends State<AnimatedButton>
 
   AnimatedContainer iconContainer(Color backgroundColor, Icon icon) {
     return AnimatedContainer(
-      duration: widget.buttonDecoration.duration,
-      height: widget.containerHeight,
+      duration: buttonDecoration.duration,
+      height: containerHeight,
       width: 100.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20)),
