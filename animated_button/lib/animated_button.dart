@@ -95,6 +95,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
       return activationStatus
           ? AnimatedContainer(
               duration: widget.buttonDecoration.duration,
+        curve:  widget.buttonDecoration.curves,
               height: widget.containerHeight,
               width: widget.containerWidth,
               decoration: BoxDecoration(
@@ -117,6 +118,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
             )
           : AnimatedContainer(
               duration: widget.buttonDecoration.duration,
+              curve:  widget.buttonDecoration.curves,
               height: widget.containerHeight,
               width: widget.containerWidth,
               decoration: BoxDecoration(
